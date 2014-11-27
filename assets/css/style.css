@@ -1,1 +1,71 @@
+@font-face {
+    font-family: "nokia-pure-headline-ultralight";
+    src: url("../fonts/nokiapure.woff") format('woff');
+}
+html {
+	border-top: 5px solid #777;
+	height: 98%;
+	margin-top: 2px;
+}
 
+body {
+	margin-top: 0;
+	font-family: "nokia-pure-headline-ultralight";
+	font-weight: 100;
+}
+
+#main-title, #subtitle {
+	text-align: center;
+}
+
+#main-title {
+	margin-top: 5%;
+	font-size: 90px;
+}
+
+#subtitle {
+	font-size: 20px;
+}
+
+::selection {
+    color: black; 
+    background: rgba(235, 203, 79, 0.66);
+}
+
+#form {
+	text-align: center;
+	margin-top: 10%;
+	margin-bottom: 10%;
+}
+
+#urlinput {
+	width: 50%;
+	height: 30px;
+	padding-right: 60px;
+	padding-left: 10px;
+	font-family: "nokia-pure-headline-ultralight";
+	font-size: 20px;
+}
+
+#urlinput:hover {
+	border: 2px solid #888;
+}
+
+#urlinput:focus {
+	border: 2px solid #888;
+	box-shadow: none;
+	outline: none;
+}
+
+#urlbutton {
+	margin-top: 20px;
+	line-height: 20px;
+	background-color: white;
+	border: 1px solid #888;
+	width: 100px;
+	height: 30px;
+}
+
+#urlbutton:hover {
+	border: 2px solid #888;
+}
