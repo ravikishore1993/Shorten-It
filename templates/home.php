@@ -16,10 +16,13 @@
 		A Minimal URL shortener
 	</div>
 	<form id="form">
-		<input type="text" id="urlinput" />
+		<input type="text" id="urlinput" onclick="select()" placeholder="Paste your Url"/>
 		<br>
 		<button id="urlbutton">Go</button>
 	</form>
+	<div id="ajax-loader">
+		<img src="assets/icons/ajax-loader.gif">
+	</div>
 	<div id="status">
 		
 	</div>

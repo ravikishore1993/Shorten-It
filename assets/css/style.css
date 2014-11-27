@@ -45,6 +45,7 @@ body {
 	padding-left: 10px;
 	font-family: "nokia-pure-headline-ultralight";
 	font-size: 20px;
+	text-align: center;
 }
 
 #urlinput:hover {
@@ -77,4 +78,14 @@ body {
 #status {
 	text-align: center;
 	font-size: 30px;
+}
+
+#ajax-loader {
+	margin-top: 10%;
+	margin-bottom: 4%;
+	text-align: center;
+}
+
+a {
+	text-decoration: none;
 }
