@@ -108,3 +108,9 @@ a {
 .github {
 	font-weight: bold;
 }
+
+#error {
+	font-size: 200px;
+	text-align: center;
+	margin-top: 200px;
+}
