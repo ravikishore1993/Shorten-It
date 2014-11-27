@@ -21,5 +21,30 @@
     	$shortener->render('home.php');
 	});
 
+	$shortener->post('/', function () use ($shortener) 
+	{
+		$response = array('success' => false, 'url' => '');
+		$url = $shortener->request->post('url');
+		if(!filter_var($url, FILTER_VALIDATE_URL))
+		{
+			echo json_encode($response);
+			die();
+		}
+		else
+		{
+			
+		}
+	});
+
+	$shortener->get('/:name', function ($name) use ($shortener) 
+	{
+		$shortener->redirect('https://google.co.in');
+	});
+
+	$shortener->get('/404', function () use ($shortener) 
+	{
+		$shortener->render('404.php');
+	});
+
 	$shortener->run();
 ?>

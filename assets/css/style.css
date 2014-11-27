@@ -35,7 +35,7 @@ body {
 #form {
 	text-align: center;
 	margin-top: 10%;
-	margin-bottom: 10%;
+	margin-bottom: 4%;
 }
 
 #urlinput {
@@ -68,4 +68,13 @@ body {
 
 #urlbutton:hover {
 	border: 2px solid #888;
+}
+
+#urlbutton:focus {
+	outline: none;
+}
+
+#status {
+	text-align: center;
+	font-size: 30px;
 }

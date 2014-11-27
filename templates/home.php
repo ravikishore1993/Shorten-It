@@ -6,6 +6,7 @@
 	<link rel="shortcut icon" href="assets/icons/favicon.ico"/>
 
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="assets/scripts/main.js"></script>
 </head>
 <body>
 	<div id="main-title">
@@ -14,10 +15,13 @@
 	<div id="subtitle">
 		A Minimal URL shortener
 	</div>
-	<div id="form">
+	<form id="form">
 		<input type="text" id="urlinput" />
 		<br>
 		<button id="urlbutton">Go</button>
+	</form>
+	<div id="status">
+		
 	</div>
 </body>
 </html>
