@@ -30,7 +30,7 @@ $(document).ready(function ()
         				url = "http://" + url;
     				}
 					$('#status').html('Url shortening success for <a href="'+url+'">'+((url.length > 25 )?url.substring(0,25)+'...' :url) +'</a> ');
-					$('#urlinput').val(response['url']);
+					$('#urlinput').val(response['url']).select();
 
 				}
 				else

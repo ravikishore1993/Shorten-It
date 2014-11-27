@@ -26,5 +26,8 @@
 	<div id="status">
 		
 	</div>
+	<div id="follow">
+		follow <a href="https://rkravi.com" class="social">me</a> <a href="https://github.com/ravikishore1993/" class="social github">@	GitHub</a>
+	</div>
 </body>
 </html>

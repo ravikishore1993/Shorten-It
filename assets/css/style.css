@@ -89,3 +89,22 @@ body {
 a {
 	text-decoration: none;
 }
+
+#follow {
+	position: absolute;
+	right: 35px;
+	bottom: 35px;	
+}
+
+.social {
+	text-decoration: none;
+	color: #000;
+}
+
+.social:hover {
+	background: rgba(235, 203, 79, 0.36);
+}
+
+.github {
+	font-weight: bold;
+}

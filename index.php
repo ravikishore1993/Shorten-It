@@ -4,6 +4,7 @@
     ini_set('display_errors', 'On');
 
 	require 'vendor/autoload.php';
+	require 'libs/Orchestrate.php';
 	$config = include 'config/config.php';
 
 	$shortener = new \Slim\Slim
@@ -26,33 +27,15 @@
 		global $config;
 		$response = array('success' => false, 'url' => '');
 		$url = $shortener->request->post('url');
-	 
-	    if (!preg_match("~^(?:f|ht)tps?://~i", $url)) 
-	    {
-        	$url = "http://" . $url;
-		}
-		if(!filter_var($url, FILTER_VALIDATE_URL))
+
+		if( !preg_match("#\b(([\w-]+://?|www[.])[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/)))#i", $url) || strpos($url, $config['DEPLOY_URL']) > -1)
 		{
 			echo json_encode($response);
 			die();
 		}
-		else if(strpos($url, $config['DEPLOY_URL']) > -1)
-		{
-			echo json_encode($response);
-			die();	
-		}
 		else
 		{
-			// Search for existence
-			global $config;
-			$search = Unirest::get
-			(
-				$config['ORCHESTRATE_LINK']."?query=".sha1($url), 
-				null,
-				null,
-				$config['ORCHESTRATE_KEY'],
-				null
-			);
+			$search = OrchQuery($url,$config);
 			if(intval($search->body->count) == 1)
 			{
 				$result = $search->body->results[0]->path->key;
@@ -61,15 +44,7 @@
 			}
 			else
 			{
-				// fetch lastkeyflag. increment and put.
-				$lastresponse = Unirest::get
-				(
-					$config['ORCHESTRATE_LINK']."LASTKEYFLAG", 
-					null,
-					null,
-					$config['ORCHESTRATE_KEY'],
-					null
-				);
+				$lastresponse = OrchLastKey($config);
 				$lastresponse = $lastresponse->body;
 				if(!isset($lastresponse->key))
 				{
@@ -80,25 +55,11 @@
 					$current["key"] = strval($lastresponse->key);	
 					$current["key"]++;
 				}
-				Unirest::put
-				(
-					$config['ORCHESTRATE_LINK']."LASTKEYFLAG", 
-					$headers = array("Content-Type" => "application/json"), 
-					$body = json_encode($current), 
-					$username = $config['ORCHESTRATE_KEY'], 
-					$password = NULL
-				);
-				
+				OrchPutLastKey($config, $current);
 				$storage["url"] = $url;
 				$storage["hash"] = sha1($url);
-				Unirest::put
-				(
-					$config['ORCHESTRATE_LINK'].$current["key"], 
-					$headers = array("Content-Type" => "application/json"), 
-					$body = json_encode($storage), 
-					$username = $config['ORCHESTRATE_KEY'], 
-					$password = NULL
-				);
+				OrchPutNewLink($config, $current, $storage);
+				
 				$response['success'] = true;
 				$response['url'] = $config['DEPLOY_URL'].$current["key"];
 			}
@@ -120,14 +81,7 @@
 			$shortener->redirect('/404');
 			die();
 		}
-		$response = Unirest::get
-		(
-			$config['ORCHESTRATE_LINK'].$name, 
-			null,
-			null,
-			$config['ORCHESTRATE_KEY'],
-			null
-		);
+		$response = OrchGetLink($config,$name);
 		$response = $response->body;
 		if(!isset($response->url))
 		{
