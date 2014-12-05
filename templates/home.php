@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8">
+    <meta name="Description" CONTENT="Minimal URL shortener">
 	<title>Shorten It!</title>
+    <meta name="robots" content="noindex,nofollow">
+
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 	<link rel="shortcut icon" href="assets/icons/favicon.ico"/>
 
