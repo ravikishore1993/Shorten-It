@@ -14,13 +14,13 @@
 </head>
 <body>
 	<div id="main-title">
-		Shorten It!	
+		Shorten It!
 	</div>
 	<div id="subtitle">
 		A Minimal URL shortener
 	</div>
 	<form id="form">
-		<input type="text" id="urlinput" onclick="select()" placeholder="Paste your Url"/>
+		<input type="text" id="urlinput" onclick="select()" placeholder="Paste your Url" autofocus />
 		<br>
 		<button id="urlbutton">Go</button>
 	</form>
@@ -28,7 +28,7 @@
 		<img src="assets/icons/ajax-loader.gif">
 	</div>
 	<div id="status">
-		
+
 	</div>
 	<div id="follow">
 		follow <a href="https://rkravi.com" class="social">me</a> <a href="https://github.com/ravikishore1993/" class="social github">@	GitHub</a>
