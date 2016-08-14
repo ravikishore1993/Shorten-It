@@ -22,7 +22,14 @@
 	<form id="form">
 		<input type="text" id="urlinput" onclick="select()" placeholder="Paste your Url" autofocus />
 		<br>
+		<div id="passdiv">
+			<label for="passinput" id="passlabel">Password</label>
+			<input type="password" id="passinput" onclick="passinput()" />
+		</div>
 		<button id="urlbutton">Go</button>
+		<span id="check">
+			<input type="checkbox" class="css-checkbox" name="private" value="private" id="checkboxid"> <label for="checkboxid" class="css-label">Private</label> 
+		</span>
 	</form>
 	<div id="ajax-loader">
 		<img src="assets/icons/ajax-loader.gif">

@@ -2,7 +2,7 @@
 
 	function OrchQuery($url, $config)
 	{
-		return Unirest::get
+		$results = Unirest::get
 			(
 				$config['ORCHESTRATE_LINK']."?query=".sha1($url), 
 				null,
@@ -10,6 +10,21 @@
 				$config['ORCHESTRATE_KEY'],
 				null
 			);
+		if(intval($results->body->count) > 0)
+		{
+			$newresults = [ "count" => 0 , "results" =>array() ];
+			foreach ($results->body->results as $key => $value) {
+				if(!isset($value->path->private))
+				{
+					$newresults['count'] = $newresults['count'] + 1 ;
+					array_push($newresults['results'], $value);
+				}
+			}
+			return json_decode(json_encode($newresults));
+		}
+		else
+			return $results->body;
+			
 	}
 
 	function OrchLastKey($config)
@@ -26,6 +41,7 @@
 
 	function OrchPutLastKey($config, $current)
 	{
+		
 		return Unirest::put
 			(
 				$config['ORCHESTRATE_LINK']."LASTKEYFLAG", 

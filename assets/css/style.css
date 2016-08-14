@@ -38,10 +38,16 @@ body {
 	margin-bottom: 4%;
 }
 
+#passform {
+	text-align: center;
+	margin-top: 100px;
+	margin-bottom: 4%;
+}
+
 #urlinput {
 	width: 50%;
 	height: 30px;
-	padding-right: 60px;
+	padding-right: 10px;
 	padding-left: 10px;
 	font-family: "nokia-pure-headline-ultralight";
 	font-size: 20px;
@@ -113,4 +119,91 @@ a {
 	font-size: 200px;
 	text-align: center;
 	margin-top: 200px;
+}
+
+#check {
+	margin-left: 30px;
+}
+
+#passlabel {
+	margin-right: 20px;
+	position:absolute;
+	left:50%;
+	margin-left:-200px
+}
+
+#passinput {
+	border-top: none;
+	border-right: none;
+	border-left: none;
+	border-bottom: 1px solid #bbb;
+	text-align: center;
+	font-family: "nokia-pure-headline-ultralight";
+	font-size: 16px;
+	width: 200px;
+	position:absolute;
+	left:50%;
+	margin-left:-100px;
+}
+
+#passinput:hover {
+	border: 1px solid #888;
+	border-right: none;
+	border-left: none;
+	border-top: none;
+}
+
+#passinput:focus {
+	border: 1px solid #888;
+	box-shadow: none;
+	outline: none;
+	border-right: none;
+	border-left: none;
+	border-top: none;
+}
+
+.passstatus {
+	margin-top: 50px;
+}
+
+#passdiv {
+	margin-top: 15px;
+	margin-bottom: 40px;
+	display: none;
+}
+
+input[type=checkbox].css-checkbox {
+    position: absolute;
+    z-index: -1000;
+    left: -1000px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    width: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+}
+input[type=checkbox].css-checkbox + label.css-label {
+    padding-left: 20px;
+    height: 15px;
+    display: inline-block;
+    line-height: 15px;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    font-size: 15px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+input[type=checkbox].css-checkbox:checked + label.css-label {
+    background-position: 0 -15px;
+}
+label.css-label {
+    background-image: url("../icons/checkbox.png");
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }

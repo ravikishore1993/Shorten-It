@@ -27,7 +27,8 @@
 		global $config;
 		$response = array('success' => false, 'url' => '');
 		$url = $shortener->request->post('url');
-
+		$password = $shortener->request->post('password');
+		$isPrivate = (intval($shortener->request->post('privateLink')) == 1)? true : false;
 		if( !preg_match("#\b(([\w-]+://?|www[.])[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/)))#i", $url) || strpos($url, $config['DEPLOY_URL']) > -1)
 		{
 			echo json_encode($response);
@@ -36,9 +37,9 @@
 		else
 		{
 			$search = OrchQuery($url,$config);
-			if(intval($search->body->count) == 1)
+			if(intval($search->count) > 0)
 			{
-				$result = $search->body->results[0]->path->key;
+				$result = $search->results[0]->path->key;
 				$response['success'] = true;
 				$response['url'] = $config['DEPLOY_URL'].$result;
 			}
@@ -58,6 +59,11 @@
 				OrchPutLastKey($config, $current);
 				$storage["url"] = $url;
 				$storage["hash"] = sha1($url);
+				if($isPrivate)
+				{
+					$storage["private"] = true;
+					$storage["password"] = sha1($password);
+				}
 				OrchPutNewLink($config, $current, $storage);
 				
 				$response['success'] = true;
@@ -87,6 +93,49 @@
 		{
 			$shortener->redirect('/404');
 			die();
+		}
+		else if(isset($response->private))
+		{
+			$shortener->render('pass.php', array("url" => $config['DEPLOY_URL'].$name));
+			die();
+		}
+		else
+		{
+			$shortener->redirect($response->url);
+			die();
+		}
+
+	});
+
+	$shortener->post('/:name', function ($name) use ($shortener) 
+	{
+		global $config;
+		if(!preg_match('/^[a-zA-Z]+$/', $name))
+		{
+			$shortener->redirect('/404');
+			die();
+		}
+		$response = OrchGetLink($config,$name);
+		$response = $response->body;
+		if(!isset($response->url))
+		{
+			$shortener->redirect('/404');
+			die();
+		}
+		else if(isset($response->private))
+		{
+			$password = sha1(trim($shortener->request->post('password')));
+			$actualPassword = $response->password;
+			if($password === $actualPassword)
+			{
+				$shortener->redirect($response->url);
+				die();				
+			}
+			else
+			{
+				$shortener->render('pass.php', array("url" => $config['DEPLOY_URL'].$name));
+				die();
+			}
 		}
 		else
 		{
