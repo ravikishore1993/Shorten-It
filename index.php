@@ -37,7 +37,7 @@
 		else
 		{
 			$search = OrchQuery($url,$config);
-			if(intval($search->count) > 0)
+			if((intval($search->count) > 0) && ($isPrivate == false))
 			{
 				$result = $search->results[0]->path->key;
 				$response['success'] = true;
