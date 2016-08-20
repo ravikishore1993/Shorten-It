@@ -12,6 +12,9 @@
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 </head>
 <body>
+	<div id="back">
+		<a href='<?php echo $urlhome; ?>' >Go back to Shortener</a>
+	</div>
 	<div id="status" class="passstatus">
 		<?php echo $url; ?>
 	</div>

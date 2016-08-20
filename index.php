@@ -96,7 +96,7 @@
 		}
 		else if(isset($response->private))
 		{
-			$shortener->render('pass.php', array("url" => $config['DEPLOY_URL'].$name));
+			$shortener->render('pass.php', array("url" => $config['DEPLOY_URL'].$name, "urlhome" => $config['DEPLOY_URL']));
 			die();
 		}
 		else
@@ -133,7 +133,7 @@
 			}
 			else
 			{
-				$shortener->render('pass.php', array("url" => $config['DEPLOY_URL'].$name));
+				$shortener->render('pass.php', array("url" => $config['DEPLOY_URL'].$name, "urlhome" => $config['DEPLOY_URL']));
 				die();
 			}
 		}
