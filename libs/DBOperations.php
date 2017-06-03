@@ -2,7 +2,7 @@
 
 	function DBInit($config)
 	{
-		$dsn = "mysql:host=$config['DBHOST'];dbname=$config['DB'];charset=utf8";
+		$dsn = "mysql:host=".$config['DBHOST'].";port=3316;dbname=".$config['DB'].";charset=utf8";
 		$opt = [
 		    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
 		    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
@@ -89,17 +89,18 @@
 	function DBGetLink($db, $name)
 	{
 		$query = $db->prepare('SELECT * from links WHERE keyword = ?');
-		$query->execute([$name]);
+         	$query->execute([$name]);
 		$results = $query->fetchAll();
 		if(0 == count($results))
-		{
-			$results = 0;
+        	{
+			$results = null;
+			return $results;
 		}
 		else
 		{
 			$results = $results[0];
+			return (object)$results;
 		}
 
-		return $results;
 	}
 ?>

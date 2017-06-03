@@ -26,6 +26,7 @@
 	$shortener->post('/', function () use ($shortener) 
 	{
 		global $config;
+		global $db;
 		$response = array('success' => false, 'url' => '');
 		$url = $shortener->request->post('url');
 		$password = $shortener->request->post('password');
@@ -87,6 +88,7 @@
 	$shortener->get('/:name', function ($name) use ($shortener) 
 	{
 		global $config;
+                global $db;
 		if(!preg_match('/^[a-zA-Z]+$/', $name))
 		{
 			$shortener->redirect('/404');
@@ -114,6 +116,7 @@
 	$shortener->post('/:name', function ($name) use ($shortener) 
 	{
 		global $config;
+                global $db;
 		if(!preg_match('/^[a-zA-Z]+$/', $name))
 		{
 			$shortener->redirect('/404');
