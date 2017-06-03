@@ -4,8 +4,10 @@
 	(
 		'MODE' => 'development',  // Development or Production
 		'DEBUG' => true,
-		'ORCHESTRATE_LINK' => '',
-		'ORCHESTRATE_KEY' => '',
+		'DB' => '',
+		'DBHOST' => '',
+		'DBUSER' => '',
+		'DBPASS' => '',
 		'DEPLOY_URL' => 'http://sho.rt/'
 	);
 

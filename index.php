@@ -4,8 +4,9 @@
     ini_set('display_errors', 'On');
 
 	require 'vendor/autoload.php';
-	require 'libs/Orchestrate.php';
+	require 'libs/DBOperations.php';
 	$config = include 'config/config.php';
+	$db = DBInit($config);
 
 	$shortener = new \Slim\Slim
 	(
@@ -36,35 +37,39 @@
 		}
 		else
 		{
-			$search = OrchQuery($url,$config);
+			$search = DBQuery($db,$url);
 			if((intval($search->count) > 0) && ($isPrivate == false))
 			{
-				$result = $search->results[0]->path->key;
+				$result = $search->results[0]->keyword;
 				$response['success'] = true;
 				$response['url'] = $config['DEPLOY_URL'].$result;
 			}
 			else
 			{
-				$lastresponse = OrchLastKey($config);
-				$lastresponse = $lastresponse->body;
-				if(!isset($lastresponse->key))
+				$lastresponse = DBLastKey($db);
+				if(NULL == $lastresponse)
 				{
 					$current["key"]="a";
 				}
 				else
 				{
-					$current["key"] = strval($lastresponse->key);	
+					$current["key"] = strval($lastresponse);
 					$current["key"]++;
 				}
-				OrchPutLastKey($config, $current);
+				DBPutLastKey($db, $current);
 				$storage["url"] = $url;
 				$storage["hash"] = sha1($url);
 				if($isPrivate)
 				{
-					$storage["private"] = true;
+					$storage["private"] = 1;
 					$storage["password"] = sha1($password);
 				}
-				OrchPutNewLink($config, $current, $storage);
+				else
+				{
+					$storage["private"] = 0;
+					$storage["password"] = NULL;
+				}
+				DBPutNewLink($db, $current, $storage);
 				
 				$response['success'] = true;
 				$response['url'] = $config['DEPLOY_URL'].$current["key"];
@@ -87,14 +92,13 @@
 			$shortener->redirect('/404');
 			die();
 		}
-		$response = OrchGetLink($config,$name);
-		$response = $response->body;
-		if(!isset($response->url))
+		$response = DBGetLink($db,$name);
+		if(null == $response)
 		{
 			$shortener->redirect('/404');
 			die();
 		}
-		else if(isset($response->private))
+		else if(intval($response->private))
 		{
 			$shortener->render('pass.php', array("url" => $config['DEPLOY_URL'].$name, "urlhome" => $config['DEPLOY_URL']));
 			die();
@@ -115,14 +119,13 @@
 			$shortener->redirect('/404');
 			die();
 		}
-		$response = OrchGetLink($config,$name);
-		$response = $response->body;
-		if(!isset($response->url))
+		$response = DBGetLink($db,$name);
+		if(null == $response)
 		{
 			$shortener->redirect('/404');
 			die();
 		}
-		else if(isset($response->private))
+		else if(intval($response->private))
 		{
 			$password = sha1(trim($shortener->request->post('password')));
 			$actualPassword = $response->password;
