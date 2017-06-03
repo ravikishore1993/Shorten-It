@@ -33,11 +33,11 @@
 		}
 		else
 		{
-			$newresults->count = 0;
-			$newresults->results = $results;
+			$newresults["count"] = 0;
+			$newresults["results"] = $results;
 		}
 		
-		return $newresults;
+		return (object)$newresults;
 	}
 
 	function DBLastKey($db)
@@ -52,13 +52,14 @@
 		}
 		else
 		{
-			$results = $results[0]->value;
+			$results = $results[0];
+			$results = $results["value"];
 		}
 
 		return $results;
 	}
 
-	function DBPutLastKey($config, $current)
+	function DBPutLastKey($db, $current)
 	{
 
 		if("a" == $current["key"])
@@ -73,7 +74,7 @@
 		return $query->execute([$current["key"],'LASTKEYFLAG']);
 	}
 
-	function DBPutNewLink($config, $current, $storage)
+	function DBPutNewLink($db, $current, $storage)
 	{
 		$query = $db->prepare('INSERT INTO links(keyword,reftime,url,hash,private,password) VALUES (?,?,?,?,?,?)');
 		return	$query->execute([
@@ -89,7 +90,7 @@
 	function DBGetLink($db, $name)
 	{
 		$query = $db->prepare('SELECT * from links WHERE keyword = ?');
-         	$query->execute([$name]);
+        $query->execute([$name]);
 		$results = $query->fetchAll();
 		if(0 == count($results))
         	{

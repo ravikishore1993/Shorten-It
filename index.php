@@ -41,7 +41,7 @@
 			$search = DBQuery($db,$url);
 			if((intval($search->count) > 0) && ($isPrivate == false))
 			{
-				$result = $search->results[0]->keyword;
+				$result = $search->results[0]["keyword"];
 				$response['success'] = true;
 				$response['url'] = $config['DEPLOY_URL'].$result;
 			}
@@ -88,7 +88,7 @@
 	$shortener->get('/:name', function ($name) use ($shortener) 
 	{
 		global $config;
-                global $db;
+		global $db;
 		if(!preg_match('/^[a-zA-Z]+$/', $name))
 		{
 			$shortener->redirect('/404');
@@ -116,7 +116,7 @@
 	$shortener->post('/:name', function ($name) use ($shortener) 
 	{
 		global $config;
-                global $db;
+        global $db;
 		if(!preg_match('/^[a-zA-Z]+$/', $name))
 		{
 			$shortener->redirect('/404');
